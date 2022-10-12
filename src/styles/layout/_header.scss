@@ -42,12 +42,16 @@
 
       form {
         display: grid;
+        width: 300px;
 
         input {
           text-align: center;
           padding: 8px 10px;
           transition: 0.2s;
         }
+      }
+      .error-message {
+        color: red;
       }
     }
   }
