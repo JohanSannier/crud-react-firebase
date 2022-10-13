@@ -1,9 +1,13 @@
 import React, { useRef } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../utils/firebase.config";
+import { useDispatch } from "react-redux";
+import { addPost, getPosts } from "../feature/post.slice";
 
 const CreatePost = ({ uid, displayName }) => {
   const message = useRef();
+  const dispatch = useDispatch();
+
   const handlePost = async (e) => {
     e.preventDefault();
 
@@ -14,10 +18,17 @@ const CreatePost = ({ uid, displayName }) => {
       comments: null,
       date: Date.now(),
     };
-
-    await addDoc(collection(db, "posts"), data);
-    message.current.value = "";
+    await addDoc(collection(db, "posts"), data).then(() => {
+      dispatch(addPost(data));
+      getDocs(collection(db, "posts")).then((res) =>
+        dispatch(
+          getPosts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        )
+      );
+      message.current.value = "";
+    });
   };
+
   return (
     <div className="new-post-modal">
       <form onSubmit={(e) => handlePost(e)}>

@@ -44,10 +44,10 @@ const SignUp = () => {
           <input
             type="password"
             placeholder="Mot de passe"
-            required
             ref={registerPassword}
+            required
           />
-          <input type="submit" value="Valider l'inscription" />
+          <input type="submit" value="Valider inscription" />
         </form>
       </div>
     </div>

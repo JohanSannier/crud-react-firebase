@@ -9,18 +9,20 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const user = await signInWithEmailAndPassword(
         auth,
         loginEmail.current.value,
         loginPassword.current.value
       );
-      setError(false);
+      console.log(user);
     } catch (error) {
-      setError(true);
       console.log(error.message);
+      setError(true);
     }
   };
+
   return (
     <div className="login-container">
       <div className="login">
@@ -34,11 +36,9 @@ const Login = () => {
             ref={loginPassword}
           />
           <input type="submit" value="Se connecter" />
-          {error && (
-            <p className="error-message">
-              Le mail ou le mot de passe est incorrect.
-            </p>
-          )}
+          <span>
+            {error && "Le mail ou le mot de passe ne correspondent pas"}
+          </span>
         </form>
       </div>
     </div>
