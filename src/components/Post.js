@@ -1,9 +1,11 @@
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../utils/firebase.config";
+import Delete from "./Delete";
 
 const Post = ({ post, user }) => {
   const [edit, setEdit] = useState(false);
   const [editMess, setEditMess] = useState(null);
-
   const dateFormater = (date) => {
     let days = Math.floor((new Date() - new Date(date)) / (1000 * 3600 * 24));
 
@@ -15,6 +17,17 @@ const Post = ({ post, user }) => {
       return `il y a ${days} jours`;
     }
   };
+
+  const handleEdit = async () => {
+    setEdit(false);
+
+    if (editMess) {
+      updateDoc(doc(db, "posts", post.id), {
+        message: editMess,
+      });
+    }
+  };
+
   return (
     <div className="post">
       <div className="post-header">
@@ -30,7 +43,7 @@ const Post = ({ post, user }) => {
             <span onClick={() => setEdit(!edit)}>
               <i className="fa-solid fa-pen-to-square"></i>
             </span>
-            <span>DELETE</span>
+            <Delete postId={post.id} />
           </div>
         )}
       </div>
@@ -38,12 +51,14 @@ const Post = ({ post, user }) => {
         <>
           <textarea
             autoFocus
-            value={editMess ? editMess : post.message}
+            defaultValue={editMess ? editMess : post.message}
             onChange={(e) => {
               setEditMess(e.target.value);
             }}
           ></textarea>
-          <button className="edit-btn"></button>
+          <button className="edit-btn" onClick={() => handleEdit()}>
+            Modifier le message
+          </button>
         </>
       ) : (
         <p>{editMess ? editMess : post.message}</p>
