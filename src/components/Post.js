@@ -14,7 +14,7 @@ const Post = ({ post, user }) => {
     if (days === 0) {
       return "aujourd'hui";
     } else if (days === 1) {
-      return "il y a 1 jour";
+      return "hier";
     } else {
       return "il y a " + days + " jours";
     }

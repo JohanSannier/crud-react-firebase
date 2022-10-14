@@ -3,7 +3,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 const ConnectModal = () => {
-  const [signUp, setSignUp] = useState(true);
+  const [signUp, setSignUp] = useState(false);
 
   return (
     <div className="connect-modal">
