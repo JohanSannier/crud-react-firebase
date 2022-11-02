@@ -40,9 +40,9 @@ const Post = ({ post, user }) => {
         </div>
         {post.authorId === user?.uid && (
           <div className="right-part">
-            <span onClick={() => setEdit(!edit)}>
+            {/* <span onClick={() => setEdit(!edit)}>
               <i className="fa-solid fa-pen-to-square"></i>
-            </span>
+            </span> */}
             <Delete postId={post.id} />
           </div>
         )}
